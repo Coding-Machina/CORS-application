@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="InstituteManagementShalvinModelStoreContainer" CdmEntityContainer="InstituteManagementShalvinEntities">
+    <EntitySetMapping Name="Batches">
+      <EntityTypeMapping TypeName="InstituteManagementShalvinModel.Batch">
+        <MappingFragment StoreEntitySet="Batch">
+          <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+          <ScalarProperty Name="BatchName" ColumnName="BatchName" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="TentativeEndDate" ColumnName="TentativeEndDate" />
+          <ScalarProperty Name="NoOfHours" ColumnName="NoOfHours" />
+          <ScalarProperty Name="HoursTaken" ColumnName="HoursTaken" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BatchSchedules">
+      <EntityTypeMapping TypeName="InstituteManagementShalvinModel.BatchSchedule">
+        <MappingFragment StoreEntitySet="BatchSchedule">
+          <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+          <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+          <ScalarProperty Name="HoursTaken" ColumnName="HoursTaken" />
+          <ScalarProperty Name="TopicsTaken" ColumnName="TopicsTaken" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spAdd" FunctionName="InstituteManagementShalvinModel.Store.spAdd" />
+    <FunctionImportMapping FunctionImportName="spAllBatches" FunctionName="InstituteManagementShalvinModel.Store.spAllBatches">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InstituteManagementShalvinModel.spAllBatches_Result">
+          <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+          <ScalarProperty Name="BatchName" ColumnName="BatchName" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="TentativeEndDate" ColumnName="TentativeEndDate" />
+          <ScalarProperty Name="NoOfHours" ColumnName="NoOfHours" />
+          <ScalarProperty Name="HoursTaken" ColumnName="HoursTaken" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spInsertBatch" FunctionName="InstituteManagementShalvinModel.Store.spInsertBatch" />
+    <FunctionImportMapping FunctionImportName="spInsertBatchSchedule" FunctionName="InstituteManagementShalvinModel.Store.spInsertBatchSchedule" />
+  </EntityContainerMapping>
+</Mapping>

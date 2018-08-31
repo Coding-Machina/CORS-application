@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InstituteManagementShalvinModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="BatchId" />
+    </Key>
+    <Property Name="BatchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BatchName" Type="varchar" MaxLength="40" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="TentativeEndDate" Type="date" />
+    <Property Name="NoOfHours" Type="int" />
+    <Property Name="HoursTaken" Type="int" />
+    <Property Name="Remarks" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="BatchSchedule">
+    <Key>
+      <PropertyRef Name="ScheduleId" />
+    </Key>
+    <Property Name="ScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BatchId" Type="int" />
+    <Property Name="HoursTaken" Type="int" />
+    <Property Name="TopicsTaken" Type="varchar" MaxLength="100" />
+    <Property Name="Remarks" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <Association Name="FK__BatchSche__Batch__15502E78">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+    <End Role="BatchSchedule" Type="Self.BatchSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchId" />
+      </Principal>
+      <Dependent Role="BatchSchedule">
+        <PropertyRef Name="BatchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="spAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="i" Type="int" Mode="In" />
+    <Parameter Name="j" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spAllBatches" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="spInsertBatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BatchName" Type="varchar" Mode="In" />
+    <Parameter Name="StartDate" Type="date" Mode="In" />
+    <Parameter Name="TentativeEndDate" Type="date" Mode="In" />
+    <Parameter Name="NoOfHours" Type="int" Mode="In" />
+    <Parameter Name="HoursTaken" Type="int" Mode="In" />
+    <Parameter Name="Remarks" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spInsertBatchSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BatchId" Type="int" Mode="In" />
+    <Parameter Name="HoursTaken" Type="int" Mode="In" />
+    <Parameter Name="TopicsTaken" Type="varchar" Mode="In" />
+    <Parameter Name="Remarks" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="InstituteManagementShalvinModelStoreContainer">
+    <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BatchSchedule" EntityType="Self.BatchSchedule" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__BatchSche__Batch__15502E78" Association="Self.FK__BatchSche__Batch__15502E78">
+      <End Role="Batch" EntitySet="Batch" />
+      <End Role="BatchSchedule" EntitySet="BatchSchedule" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="InstituteManagementShalvinModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Batch">
+          <Key>
+            <PropertyRef Name="BatchId" />
+          </Key>
+          <Property Name="BatchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BatchName" Type="varchar" MaxLength="40" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="TentativeEndDate" Type="date" />
+          <Property Name="NoOfHours" Type="int" />
+          <Property Name="HoursTaken" Type="int" />
+          <Property Name="Remarks" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="BatchSchedule">
+          <Key>
+            <PropertyRef Name="ScheduleId" />
+          </Key>
+          <Property Name="ScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BatchId" Type="int" />
+          <Property Name="HoursTaken" Type="int" />
+          <Property Name="TopicsTaken" Type="varchar" MaxLength="100" />
+          <Property Name="Remarks" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <Association Name="FK__BatchSche__Batch__15502E78">
+          <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+          <End Role="BatchSchedule" Type="Self.BatchSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="BatchSchedule">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="i" Type="int" Mode="In" />
+          <Parameter Name="j" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spAllBatches" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spInsertBatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BatchName" Type="varchar" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="TentativeEndDate" Type="date" Mode="In" />
+          <Parameter Name="NoOfHours" Type="int" Mode="In" />
+          <Parameter Name="HoursTaken" Type="int" Mode="In" />
+          <Parameter Name="Remarks" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spInsertBatchSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BatchId" Type="int" Mode="In" />
+          <Parameter Name="HoursTaken" Type="int" Mode="In" />
+          <Parameter Name="TopicsTaken" Type="varchar" Mode="In" />
+          <Parameter Name="Remarks" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="InstituteManagementShalvinModelStoreContainer">
+          <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BatchSchedule" EntityType="Self.BatchSchedule" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BatchSche__Batch__15502E78" Association="Self.FK__BatchSche__Batch__15502E78">
+            <End Role="Batch" EntitySet="Batch" />
+            <End Role="BatchSchedule" EntitySet="BatchSchedule" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InstituteManagementShalvinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Batch">
+          <Key>
+            <PropertyRef Name="BatchId" />
+          </Key>
+          <Property Name="BatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BatchName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="TentativeEndDate" Type="DateTime" Precision="0" />
+          <Property Name="NoOfHours" Type="Int32" />
+          <Property Name="HoursTaken" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BatchSchedules" Relationship="Self.FK__BatchSche__Batch__15502E78" FromRole="Batch" ToRole="BatchSchedule" />
+        </EntityType>
+        <EntityType Name="BatchSchedule">
+          <Key>
+            <PropertyRef Name="ScheduleId" />
+          </Key>
+          <Property Name="ScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BatchId" Type="Int32" />
+          <Property Name="HoursTaken" Type="Int32" />
+          <Property Name="TopicsTaken" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__BatchSche__Batch__15502E78">
+          <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+          <End Role="BatchSchedule" Type="Self.BatchSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="BatchSchedule">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InstituteManagementShalvinEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Batches" EntityType="Self.Batch" />
+          <EntitySet Name="BatchSchedules" EntityType="Self.BatchSchedule" />
+          <AssociationSet Name="FK__BatchSche__Batch__15502E78" Association="Self.FK__BatchSche__Batch__15502E78">
+            <End Role="Batch" EntitySet="Batches" />
+            <End Role="BatchSchedule" EntitySet="BatchSchedules" />
+          </AssociationSet>
+          <FunctionImport Name="spAdd">
+            <Parameter Name="i" Mode="In" Type="Int32" />
+            <Parameter Name="j" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spAllBatches" ReturnType="Collection(InstituteManagementShalvinModel.spAllBatches_Result)" />
+          <FunctionImport Name="spInsertBatch">
+            <Parameter Name="BatchName" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="TentativeEndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="NoOfHours" Mode="In" Type="Int32" />
+            <Parameter Name="HoursTaken" Mode="In" Type="Int32" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertBatchSchedule">
+            <Parameter Name="BatchId" Mode="In" Type="Int32" />
+            <Parameter Name="HoursTaken" Mode="In" Type="Int32" />
+            <Parameter Name="TopicsTaken" Mode="In" Type="String" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="spAllBatches_Result">
+          <Property Type="Int32" Name="BatchId" Nullable="false" />
+          <Property Type="String" Name="BatchName" Nullable="true" MaxLength="40" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" />
+          <Property Type="DateTime" Name="TentativeEndDate" Nullable="true" />
+          <Property Type="Int32" Name="NoOfHours" Nullable="true" />
+          <Property Type="Int32" Name="HoursTaken" Nullable="true" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="200" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InstituteManagementShalvinModelStoreContainer" CdmEntityContainer="InstituteManagementShalvinEntities">
+          <EntitySetMapping Name="Batches">
+            <EntityTypeMapping TypeName="InstituteManagementShalvinModel.Batch">
+              <MappingFragment StoreEntitySet="Batch">
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="BatchName" ColumnName="BatchName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="TentativeEndDate" ColumnName="TentativeEndDate" />
+                <ScalarProperty Name="NoOfHours" ColumnName="NoOfHours" />
+                <ScalarProperty Name="HoursTaken" ColumnName="HoursTaken" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BatchSchedules">
+            <EntityTypeMapping TypeName="InstituteManagementShalvinModel.BatchSchedule">
+              <MappingFragment StoreEntitySet="BatchSchedule">
+                <ScalarProperty Name="ScheduleId" ColumnName="ScheduleId" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="HoursTaken" ColumnName="HoursTaken" />
+                <ScalarProperty Name="TopicsTaken" ColumnName="TopicsTaken" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spAdd" FunctionName="InstituteManagementShalvinModel.Store.spAdd" />
+          <FunctionImportMapping FunctionImportName="spAllBatches" FunctionName="InstituteManagementShalvinModel.Store.spAllBatches">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InstituteManagementShalvinModel.spAllBatches_Result">
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="BatchName" ColumnName="BatchName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="TentativeEndDate" ColumnName="TentativeEndDate" />
+                <ScalarProperty Name="NoOfHours" ColumnName="NoOfHours" />
+                <ScalarProperty Name="HoursTaken" ColumnName="HoursTaken" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spInsertBatch" FunctionName="InstituteManagementShalvinModel.Store.spInsertBatch" />
+          <FunctionImportMapping FunctionImportName="spInsertBatchSchedule" FunctionName="InstituteManagementShalvinModel.Store.spInsertBatchSchedule" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

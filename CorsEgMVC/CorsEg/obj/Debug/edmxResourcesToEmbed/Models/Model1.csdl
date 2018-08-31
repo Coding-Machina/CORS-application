@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InstituteManagementShalvinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="BatchId" />
+    </Key>
+    <Property Name="BatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BatchName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="TentativeEndDate" Type="DateTime" Precision="0" />
+    <Property Name="NoOfHours" Type="Int32" />
+    <Property Name="HoursTaken" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="BatchSchedules" Relationship="Self.FK__BatchSche__Batch__15502E78" FromRole="Batch" ToRole="BatchSchedule" />
+  </EntityType>
+  <EntityType Name="BatchSchedule">
+    <Key>
+      <PropertyRef Name="ScheduleId" />
+    </Key>
+    <Property Name="ScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BatchId" Type="Int32" />
+    <Property Name="HoursTaken" Type="Int32" />
+    <Property Name="TopicsTaken" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__BatchSche__Batch__15502E78">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+    <End Role="BatchSchedule" Type="Self.BatchSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="BatchId" />
+      </Principal>
+      <Dependent Role="BatchSchedule">
+        <PropertyRef Name="BatchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InstituteManagementShalvinEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Batches" EntityType="Self.Batch" />
+    <EntitySet Name="BatchSchedules" EntityType="Self.BatchSchedule" />
+    <AssociationSet Name="FK__BatchSche__Batch__15502E78" Association="Self.FK__BatchSche__Batch__15502E78">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="BatchSchedule" EntitySet="BatchSchedules" />
+    </AssociationSet>
+    <FunctionImport Name="spAdd">
+      <Parameter Name="i" Mode="In" Type="Int32" />
+      <Parameter Name="j" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spAllBatches" ReturnType="Collection(InstituteManagementShalvinModel.spAllBatches_Result)" />
+    <FunctionImport Name="spInsertBatch">
+      <Parameter Name="BatchName" Mode="In" Type="String" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+      <Parameter Name="TentativeEndDate" Mode="In" Type="DateTime" />
+      <Parameter Name="NoOfHours" Mode="In" Type="Int32" />
+      <Parameter Name="HoursTaken" Mode="In" Type="Int32" />
+      <Parameter Name="Remarks" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spInsertBatchSchedule">
+      <Parameter Name="BatchId" Mode="In" Type="Int32" />
+      <Parameter Name="HoursTaken" Mode="In" Type="Int32" />
+      <Parameter Name="TopicsTaken" Mode="In" Type="String" />
+      <Parameter Name="Remarks" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="spAllBatches_Result">
+    <Property Type="Int32" Name="BatchId" Nullable="false" />
+    <Property Type="String" Name="BatchName" Nullable="true" MaxLength="40" />
+    <Property Type="DateTime" Name="StartDate" Nullable="true" />
+    <Property Type="DateTime" Name="TentativeEndDate" Nullable="true" />
+    <Property Type="Int32" Name="NoOfHours" Nullable="true" />
+    <Property Type="Int32" Name="HoursTaken" Nullable="true" />
+    <Property Type="String" Name="Remarks" Nullable="true" MaxLength="200" />
+  </ComplexType>
+</Schema>
